@@ -4,6 +4,15 @@
 
 # 技术要点
 
+# 环境
+- Android Studio Chipmunk
+- Jdk 1.8.0_291
+- Gradle 7.3.3
+- Gradle Plugin 7.2.0
+- compileSdk 32
+- targetSdk 32
+- minSdk 21
+
 ## Jetpack
 - Navigation
 - DataBinding
