@@ -13,7 +13,7 @@
 - Gradle Plugin 3.5.3
 - compileSdk 29
 - targetSdk 29
-- minSdk 29
+- minSdk 21
 - Kotlin 1.3.72
 - AndroidX true
 - DataBinding true
