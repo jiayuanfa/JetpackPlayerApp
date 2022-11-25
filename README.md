@@ -5,14 +5,18 @@
 # 技术要点
 - 使用注解生成器生成Fragment、Activity路由json，适合大型项目
 
-# 环境
+# 环境配置
 - Android Studio Chipmunk
 - Jdk 1.8.0_291
-- Gradle 7.3.3
-- Gradle Plugin 7.2.0
-- compileSdk 32
-- targetSdk 32
-- minSdk 21
+- NDK 21.4.7075529
+- Gradle 5.4.1
+- Gradle Plugin 3.5.3
+- compileSdk 29
+- targetSdk 29
+- minSdk 29
+- Kotlin 1.3.72
+- AndroidX true
+- DataBinding true
 
 ## Jetpack
 - Navigation
