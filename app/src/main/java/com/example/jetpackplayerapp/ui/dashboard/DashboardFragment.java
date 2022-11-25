@@ -11,8 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.jetpackplayerapp.databinding.FragmentDashboardBinding;
+import com.example.libnavannotation.FragmentDestination;
 
 
+@FragmentDestination(pageUrl = "main/tabs/dash", asStarter = false)
 public class DashboardFragment extends Fragment {
 
     private FragmentDashboardBinding binding;

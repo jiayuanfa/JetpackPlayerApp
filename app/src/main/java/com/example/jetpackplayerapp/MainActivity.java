@@ -1,19 +1,24 @@
 package com.example.jetpackplayerapp;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
+import androidx.navigation.fragment.NavHostFragment;
 import com.example.jetpackplayerapp.databinding.ActivityMainBinding;
+import com.example.jetpackplayerapp.utils.NavGraphBuilder;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private ActivityMainBinding binding;
+
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +27,31 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
+        /**
+         * 通过NavHostFragment拿到NavController
+         */
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        navController = NavHostFragment.findNavController(fragment);
+
+        /**
+         * 构建自定义的NavGraph
+         * 并设置给NavController
+         */
+        NavGraphBuilder.build(this, fragment.getChildFragmentManager(), navController, fragment.getId());
+
+        /**
+         * 最后给底部的BottomBar设置点击事件
+         */
+        binding.navView.setOnNavigationItemSelectedListener(this);
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        navController.navigate(menuItem.getItemId());
+
+        /**
+         * 如果标题为空，则不处理
+         */
+        return !TextUtils.isEmpty(menuItem.getTitle());
+    }
 }

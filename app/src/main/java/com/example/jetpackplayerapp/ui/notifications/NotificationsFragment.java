@@ -11,8 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.jetpackplayerapp.databinding.FragmentNotificationsBinding;
+import com.example.libnavannotation.FragmentDestination;
 
-
+@FragmentDestination(pageUrl = "main/tabs/notification", asStarter = false)
 public class NotificationsFragment extends Fragment {
 
     private FragmentNotificationsBinding binding;
