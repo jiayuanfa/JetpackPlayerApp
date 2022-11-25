@@ -29,10 +29,10 @@
 
 # 架构代码编写
 - 使用Navigator模式创建项目
-- 创建libnavannotation注解模块
-- 创建libnavcompiler模块，用于给Fragment、Activity生成路由json文件
+- 创建libnavannotation注解Java模块
+- 创建libnavcompiler Java模块，用于给Fragment、Activity生成路由json文件
 - 给HomeFragment添加路由注解生成器
-
+- 创建libcommon 安卓模块，编写整个项目所依赖的Jetpack库
 
 # 首页
 # 沙发
