@@ -4,16 +4,22 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "com.example.jetpackplayerapp"
-        minSdk 21
-        targetSdk 32
+        minSdkVersion 21
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        defaultConfig {
+            ndk {
+                // 设置支持的SO库架构
+                abiFilters 'armeabi-v7a', 'x86'
+            }
+        }
     }
 
     buildTypes {
@@ -29,15 +35,28 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    dataBinding{
+        enabled=true
+    }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.7.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    // 依赖注解生成器
+    implementation project(':libnavannotation')
+    implementation project(path: ':libcommon')
+    //如果你使用kotlin,这里需要使用 kapt project
+    annotationProcessor project(":libnavcompiler")
+//    implementation project(':libnetwork')
+//    implementation project(':libcommon')
+
+    //QQ快捷登录
+//    implementation files('libs/open_sdk_r6140_lite.jar')
+
+    //错误收集
+    implementation 'com.tencent.bugly:crashreport:latest.release'
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
 }
