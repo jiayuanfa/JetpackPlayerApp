@@ -42,6 +42,8 @@
 - 自定义AppBottomBar，灵活控制显示逻辑（AppBottomBar）
 - MainActivity使用自定义的AppBottomBar、自定义NavGraphBuilder（MainActivity）
 
+# 网络库与缓存
+- Okhttp证书信任问题（ApiService）
 
 # 首页
 # 沙发
