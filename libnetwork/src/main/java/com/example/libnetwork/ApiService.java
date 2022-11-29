@@ -19,6 +19,8 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public class ApiService {
 
     protected static final OkHttpClient okHttpClient;
+    protected static String sBaseUrl;
+    protected static Convert sConvert;
 
     static {
 
@@ -61,5 +63,21 @@ public class ApiService {
         } catch (NoSuchAlgorithmException | KeyManagementException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void init(String baseUrl, Convert convert) {
+        sBaseUrl = baseUrl;
+        if (convert == null) {
+            convert = new JsonConvert();
+        }
+        sConvert = convert;
+    }
+
+    public static <T> GetRequest<T> get(String url) {
+        return new GetRequest<>(sBaseUrl + url);
+    }
+
+    public static <T> PostRequest<T> post(String url) {
+        return new PostRequest<>(sBaseUrl + url);
     }
 }

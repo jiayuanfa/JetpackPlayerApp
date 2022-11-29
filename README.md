@@ -44,6 +44,10 @@
 
 # 网络库与缓存
 - Okhttp证书信任问题（ApiService）
+- 使用FastJson封装JsonConvert转换类（JsonConvert）
+- 封装Request抽象类
+- 封装GetRequest、PostRequest请求类
+- MainActivity请求测试
 
 # 首页
 # 沙发
