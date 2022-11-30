@@ -1,11 +1,14 @@
 package com.example.libnetwork;
 
 import android.annotation.SuppressLint;
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.arch.core.executor.ArchTaskExecutor;
+
+import com.example.libnetwork.cache.CacheManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -97,7 +100,11 @@ public abstract class Request<T, R extends Request> implements Cloneable {
         mType = claz;
         return (R)this;
     }
-    
+
+    /**
+     * 获取Call类
+     * @return
+     */
     private Call getCall() {
         okhttp3.Request.Builder builder = new okhttp3.Request.Builder();
         addHeaders(builder);
@@ -114,20 +121,23 @@ public abstract class Request<T, R extends Request> implements Cloneable {
         }
     }
 
+    /**
+     * 同步执行
+     * @return
+     */
     public ApiResponse<T> execute() {
         if (mType == null) {
             throw new RuntimeException("同步方法，response 返回值 类型必须设置");
         }
 
         if (mCacheStrategy == CACHE_ONLY) {
-//            return readCache();
+            return readCache();
         }
 
         if (mCacheStrategy != CACHE_ONLY) {
-            ApiResponse<T> result = null;
-            Response response = null;
+            ApiResponse<T> result;
             try {
-                response = getCall().execute();
+                Response response = getCall().execute();
                 result = parseResponse(response, null);
                 return result;
             } catch (IOException e) {
@@ -139,16 +149,17 @@ public abstract class Request<T, R extends Request> implements Cloneable {
         return null;
     }
 
+    /**
+     * 异步执行
+     * @param callback
+     */
     @SuppressLint("RestrictedApi")
     public void execute(final JsonCallback callback) {
         if (mCacheStrategy != NET_ONLY) {
-            ArchTaskExecutor.getIOThreadExecutor().execute(new Runnable() {
-                @Override
-                public void run() {
-                    ApiResponse<T> response = readCache();
-                    if (callback != null && response.body != null) {
-                        callback.onCacheSuccess(response);
-                    }
+            ArchTaskExecutor.getIOThreadExecutor().execute(() -> {
+                ApiResponse<T> response = readCache();
+                if (callback != null && response.body != null) {
+                    callback.onCacheSuccess(response);
                 }
             });
         }
@@ -175,10 +186,27 @@ public abstract class Request<T, R extends Request> implements Cloneable {
         }
     }
 
+    /**
+     * 通过缓存Key读取缓存
+     * @return
+     */
     private ApiResponse<T> readCache() {
-        return null;
+        String key = TextUtils.isEmpty(cacheKey)? generateCacheKey() : cacheKey;
+        Object cache = CacheManager.getCache(key);
+        ApiResponse<T> result = new ApiResponse<>();
+        result.status = 304;
+        result.message = "缓存获取成功";
+        result.body = (T) cache;
+        result.success = true;
+        return result;
     }
 
+    /**
+     * 解析返回的数据
+     * @param response
+     * @param callback
+     * @return
+     */
     private ApiResponse<T> parseResponse(Response response, JsonCallback<T> callback) {
         String message = null;
         int status = response.code();
@@ -215,16 +243,27 @@ public abstract class Request<T, R extends Request> implements Cloneable {
         result.message = message;
         if (mCacheStrategy != NET_ONLY && result.success && result.body != null && result.body instanceof Serializable) {
             // 缓存
+            saveCache(result.body);
         }
         return result;
     }
 
-    private void saveCache() {
-
+    /**
+     * 缓存数据
+     * @param body
+     */
+    private void saveCache(T body) {
+        String key = TextUtils.isEmpty(cacheKey)? generateCacheKey(): cacheKey;
+        CacheManager.save(key, body);
     }
 
+    /**
+     * 生成缓存的Key
+     * @return
+     */
     private String generateCacheKey() {
-        return null;
+        cacheKey = UrlCreator.createUrlFromParams(mUrl, params);
+        return cacheKey;
     }
 
     @NonNull

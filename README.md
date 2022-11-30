@@ -48,6 +48,9 @@
 - 封装Request抽象类
 - 封装GetRequest、PostRequest请求类
 - MainActivity请求测试
+- Room数据库的创建（CacheDatabase）
+- Cache数据表的增删改查（Cache、CacheDao）
+- Cache存取封装（CacheManager）
 
 # 首页
 # 沙发

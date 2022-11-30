@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
          */
         binding.navView.setOnNavigationItemSelectedListener(this);
 
-        getUrl();
+//        getUrl();
     }
 
     private void getUrl() {
