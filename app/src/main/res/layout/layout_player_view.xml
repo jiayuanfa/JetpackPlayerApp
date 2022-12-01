@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--    背景图-->
+    <com.example.jetpackplayerapp.view.PPImageView
+        android:id="@+id/blur_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:transitionName="blur_image"
+        tools:background="@color/color_theme_10" />
+
+    <!--真正能够播放展示视频画面的view 会动态的添加到这里-->
+
+    <!--    封面图-->
+    <com.example.jetpackplayerapp.view.PPImageView
+        android:id="@+id/cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:transitionName="cover" />
+
+    <!--    播放暂停按钮-->
+    <ImageView
+        android:id="@+id/play_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:src="@drawable/icon_video_play"
+        android:transitionName="play_btn" />
+
+    <!--    视频播放的时候的底部进度条-->
+
+    <!--    加载Loading-->
+    <ProgressBar
+        android:id="@+id/buffer_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/color_theme"
+        android:transitionName="buffer_view"
+        android:visibility="gone"
+        />
+</merge>
