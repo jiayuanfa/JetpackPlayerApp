@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="viewOutLineStrategy">
+        <attr name="clip_radius" format="dimension" />
+        <attr name="clip_side" format="enum">
+            <enum name="all" value="0"/>
+            <enum name="left" value="0"/>
+            <enum name="top" value="0" />
+            <enum name="right" value="0" />
+            <enum name="bottom" value="0" />
+        </attr>
+    </declare-styleable>
+</resources>
