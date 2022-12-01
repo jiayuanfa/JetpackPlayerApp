@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.jetpackplayerapp.R;
-import com.example.libcommon.global.utils.PixUtils;
+import com.example.libcommon.utils.PixUtils;
 
 /**
  * 列表视频播放专用

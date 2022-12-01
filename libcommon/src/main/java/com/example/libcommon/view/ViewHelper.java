@@ -1,4 +1,4 @@
-package com.example.libcommon.global.view;
+package com.example.libcommon.view;
 
 import android.annotation.TargetApi;
 import android.content.res.TypedArray;

@@ -1,4 +1,4 @@
-package com.example.libcommon.global;
+package com.example.libcommon;
 
 import android.annotation.SuppressLint;
 import android.app.Application;

@@ -53,9 +53,9 @@
 - Cache存取封装（CacheManager）
 
 # 首页
-- 自定义图片View之PPImageView，支持宽大于高、高大于宽，动态左边距的ImageView（PPImageView）
-- 自定义视频播放器ListPlayerView，支持宽大于高、高大于宽，动态展示的播放器View（ListPlayerView）
-
+- 自定义图片View之PPImageView，支持宽大于高、高大于宽，动态左边距的ImageView（PPImageView.java）
+- 自定义视频播放器ListPlayerView，支持宽大于高、高大于宽，动态展示的播放器View（ListPlayerView.java）
+- 首页视频图片流列表Item UI 编写 （layout_feed_type_image.xml、layout_feed_type_video.xml）
 
 # 沙发
 # 我的

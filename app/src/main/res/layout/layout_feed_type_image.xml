@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="com.example.jetpackplayerapp.model.Feed" />
+
+        <variable
+            name="feed"
+            type="Feed" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_white"
+        android:orientation="vertical"
+        android:paddingTop="10dp">
+
+        <!--        作者-->
+        <include
+            layout="@layout/layout_feed_author"
+            app:user="@{feed.author}" />
+
+        <!--        文字内容-->
+        <include
+            layout="@layout/layout_feed_text"
+            app:lines="@{3}"
+            app:feedText="@{feed.feeds_text}" />
+
+        <!--        图片区域-->
+        <com.example.jetpackplayerapp.view.PPImageView
+            android:id="@+id/feed_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" />
+
+        <!--        标签-->
+        <include
+            layout="@layout/layout_feed_tag"
+            app:tagText="@{feed.activityText}" />
+
+        <!--        热评-->
+        <include
+            layout="@layout/layout_feed_top_comment"
+            app:comment="@{feed.topComment}" />
+
+        <!--        点赞、评论、转发-->
+        <include
+            android:id="@+id/interaction_binding"
+            layout="@layout/layout_feed_interaction"
+            app:feed="@{feed}" />
+    </LinearLayout>
+</layout>

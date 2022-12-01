@@ -13,7 +13,7 @@ import androidx.navigation.fragment.FragmentNavigator;
 
 import com.example.jetpackplayerapp.model.Destination;
 import com.example.jetpackplayerapp.navigator.FixFragmentNavigator;
-import com.example.libcommon.global.AppGlobals;
+import com.example.libcommon.AppGlobals;
 
 import java.util.HashMap;
 import java.util.Iterator;
