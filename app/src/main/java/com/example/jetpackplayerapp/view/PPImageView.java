@@ -56,10 +56,11 @@ public class PPImageView extends AppCompatImageView {
      * @param imageUrl
      * @param isCircle
      * @param radius
+     * 此处只有设置为static静态方法，才能被xml引用
      */
     @SuppressLint("CheckResult")
     @BindingAdapter(value = {"image_url", "isCircle", "radius"}, requireAll = false)
-    public void setImageUrl(PPImageView ppImageView, String imageUrl, boolean isCircle, int radius) {
+    public static void setImageUrl(PPImageView ppImageView, String imageUrl, boolean isCircle, int radius) {
         RequestBuilder<Drawable> builder = Glide.with(ppImageView).load(imageUrl);
         if (isCircle) {
             builder.transform(new CircleCrop());

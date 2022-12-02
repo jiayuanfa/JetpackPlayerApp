@@ -268,7 +268,7 @@ public abstract class Request<T, R extends Request> implements Cloneable {
 
     @NonNull
     @Override
-    protected Object clone() throws CloneNotSupportedException {
+    public Request<T, R> clone() throws CloneNotSupportedException {
         return (Request<T, R>)super.clone();
     }
 }

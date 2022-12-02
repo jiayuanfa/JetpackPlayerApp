@@ -88,10 +88,10 @@ public class ListPlayerView extends FrameLayout {
      */
     private void setSize(int widthPx, int heightPx) {
         int maxWidth = PixUtils.getScreenWidth();
-        int maxHeight = PixUtils.getScreenHeight();
+        int maxHeight = maxWidth;
 
         int layoutWidth = maxWidth;
-        int layoutHeight = 0;
+        int layoutHeight;
 
         int coverWidth;
         int coverHeight;

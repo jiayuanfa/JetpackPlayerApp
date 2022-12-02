@@ -1,5 +1,7 @@
 package com.example.jetpackplayerapp.model;
 
+import android.text.TextUtils;
+
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
@@ -49,11 +51,25 @@ public class User extends BaseObservable implements Serializable {
     public boolean hasFollow;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return id == user.id && userId == user.userId && likeCount == user.likeCount && topCommentCount == user.topCommentCount && followCount == user.followCount && followerCount == user.followerCount && expires_time == user.expires_time && score == user.score && historyCount == user.historyCount && commentCount == user.commentCount && favoriteCount == user.favoriteCount && feedCount == user.feedCount && hasFollow == user.hasFollow && name.equals(user.name) && avatar.equals(user.avatar) && description.equals(user.description) && qqOpenId.equals(user.qqOpenId);
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof User))
+            return false;
+        User newUser = (User) obj;
+        return TextUtils.equals(name, newUser.name)
+                && TextUtils.equals(avatar, newUser.avatar)
+                && TextUtils.equals(description, newUser.description)
+                && likeCount == newUser.likeCount
+                && topCommentCount == newUser.topCommentCount
+                && followCount == newUser.followCount
+                && followerCount == newUser.followerCount
+                && qqOpenId == newUser.qqOpenId
+                && expires_time == newUser.expires_time
+                && score == newUser.score
+                && historyCount == newUser.historyCount
+                && commentCount == newUser.commentCount
+                && favoriteCount == newUser.favoriteCount
+                && feedCount == newUser.feedCount
+                && hasFollow == newUser.hasFollow;
     }
 
     @Override

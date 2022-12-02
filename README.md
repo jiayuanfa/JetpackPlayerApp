@@ -56,6 +56,14 @@
 - 自定义图片View之PPImageView，支持宽大于高、高大于宽，动态左边距的ImageView（PPImageView.java）
 - 自定义视频播放器ListPlayerView，支持宽大于高、高大于宽，动态展示的播放器View（ListPlayerView.java）
 - 首页视频图片流列表Item UI 编写 （layout_feed_type_image.xml、layout_feed_type_video.xml）
+- 首页视频图片流列表Model编写 （Feed.java）
+- 通用的带下拉刷新、上拉加载、空视图的RecyclerView布局列表xml文件编写
+- 通用的抽象的ListFragment封装
+- PagedListAdapter的使用
+- SmartRefreshLayout的使用
+- Paging的使用
+- ViewModel的使用
+- LiveData的使用
 
 # 沙发
 # 我的
