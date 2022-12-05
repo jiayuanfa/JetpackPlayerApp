@@ -64,6 +64,7 @@
 - Paging的使用
 - ViewModel的使用
 - LiveData的使用
+- 缓存处理代码编写 
 
 # 沙发
 # 我的

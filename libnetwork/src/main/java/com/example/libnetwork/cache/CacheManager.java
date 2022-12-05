@@ -48,6 +48,7 @@ public class CacheManager {
             oos = new ObjectOutputStream(baos);
             oos.writeObject(body);
             oos.flush();
+            return baos.toByteArray();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

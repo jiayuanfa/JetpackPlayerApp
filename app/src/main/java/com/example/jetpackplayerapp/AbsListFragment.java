@@ -26,6 +26,16 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
+/**
+ * 抽象的ListFragment
+ * 1：集成下拉刷新、上拉加载框架 SmartRefreshLayout
+ * 2：集成RecyclerView、PagedListAdapter
+ * 3: 空视图
+ * 4：ViewModel
+ * 5：分割线
+ * @param <T>
+ * @param <M>
+ */
 public abstract class AbsListFragment<T, M extends AbsViewModel<T>> extends Fragment implements OnRefreshListener, OnLoadMoreListener {
     protected LayoutRefreshViewBinding binding;
     protected RecyclerView mRecyclerView;
@@ -61,10 +71,16 @@ public abstract class AbsListFragment<T, M extends AbsViewModel<T>> extends Frag
         decoration.setDrawable(ContextCompat.getDrawable(getContext(), R.drawable.list_divider));
         mRecyclerView.addItemDecoration(decoration);
 
+        // 实例化ViewModel
         genericViewModel();
         return binding.getRoot();
     }
 
+    /**
+     * 重要方法
+     * 实例化ViewModel对象
+     * 使用子类传递的泛型，反射实例化ViewModel对象
+     */
     private void genericViewModel() {
         //利用 子类传递的 泛型参数实例化出absViewModel 对象。
         ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
@@ -82,6 +98,10 @@ public abstract class AbsListFragment<T, M extends AbsViewModel<T>> extends Frag
         }
     }
 
+    /**
+     * 给Paging框架提交数据
+     * @param result
+     */
     public void submitList(PagedList<T> result) {
         //只有当新数据集合大于0 的时候，才调用adapter.submitList
         //否则可能会出现 页面----有数据----->被清空-----空布局

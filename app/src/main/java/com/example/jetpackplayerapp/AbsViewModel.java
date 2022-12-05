@@ -8,11 +8,23 @@ import androidx.paging.DataSource;
 import androidx.paging.LivePagedListBuilder;
 import androidx.paging.PagedList;
 
+/**
+ * 抽象的ViewModel
+ * 核心：使用PagedList配置数据分页加载
+ * 1：数据源的设定
+ * 2：pageData的获取
+ * 3：边界数据，用于外界监听有无更多数据，以关闭上拉加载
+ * @param <T>
+ */
 public abstract class AbsViewModel<T> extends ViewModel {
 
+    // Paging配置
     protected PagedList.Config config;
+    // 数据源
     private DataSource dataSource;
+    // 依靠数据源拿到 PageData 以供 Paging框架使用
     private LiveData<PagedList<T>> pageData;
+    // 边界Paging数据 用来
     private MutableLiveData<Boolean> boundaryPageData = new MutableLiveData<>();
 
     public AbsViewModel() {

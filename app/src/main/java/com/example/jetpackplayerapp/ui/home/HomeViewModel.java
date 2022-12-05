@@ -1,5 +1,6 @@
 package com.example.jetpackplayerapp.ui.home;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.paging.PagedList;
 
 import com.alibaba.fastjson.TypeReference;
 import com.example.jetpackplayerapp.AbsViewModel;
+import com.example.jetpackplayerapp.MutablePageKeyedDataSource;
 import com.example.jetpackplayerapp.model.Feed;
 import com.example.libnetwork.ApiResponse;
 import com.example.libnetwork.ApiService;
@@ -24,11 +26,18 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class HomeViewModel extends AbsViewModel<Feed> {
 
+    // 是否使用缓存
     private volatile boolean witchCache = true;
     private MutableLiveData<PagedList<Feed>> cacheLiveData = new MutableLiveData<>();
+
+    // 多线程安全 也就是原子访问 布尔判断是否另一个线程在执行代码，本线程等待
     private AtomicBoolean loadAfter = new AtomicBoolean(false);
     private String mFeedType;
 
+    /**
+     * 给父类数据源
+     * @return
+     */
     @Override
     public DataSource createDataSource() {
         return new FeedDataSource();
@@ -43,12 +52,17 @@ public class HomeViewModel extends AbsViewModel<Feed> {
         mFeedType = feedType;
     }
 
+    /**
+     * 数据源类的生成
+     */
     class FeedDataSource extends ItemKeyedDataSource<Integer, Feed> {
         @Override
         public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Feed> callback) {
             //加载初始化数据的
             Log.e("homeviewmodel", "loadInitial: ");
             loadData(0, params.requestedLoadSize, callback);
+
+            // 首次加载不用缓存
             witchCache = false;
         }
 
@@ -72,11 +86,23 @@ public class HomeViewModel extends AbsViewModel<Feed> {
         }
     }
 
+    /**
+     * 真正去加载数据的接口处理
+     * @param key
+     * @param count
+     * @param callback
+     */
     private void loadData(int key, int count, ItemKeyedDataSource.LoadCallback<Feed> callback) {
+
+        // 正在处理
         if (key > 0) {
             loadAfter.set(true);
         }
-        //feeds/queryHotFeedsList
+
+        /**
+         * feeds/queryHotFeedsList
+         * 设置responseType
+         */
         Request request = ApiService.get("/feeds/queryHotFeedsList")
                 .addParam("feedType", 1)
                 .addParam("userId", 0)
@@ -85,27 +111,30 @@ public class HomeViewModel extends AbsViewModel<Feed> {
                 .responseType(new TypeReference<ArrayList<Feed>>() {
                 }.getType());
 
+
+        /**
+         * 获取缓存数据
+         */
         if (witchCache) {
             request.cacheStrategy(Request.CACHE_ONLY);
             request.execute(new JsonCallback<List<Feed>>() {
                 @Override
                 public void onCacheSuccess(ApiResponse<List<Feed>> response) {
                     Log.e("loadData", "onCacheSuccess: ");
-//                    MutablePageKeyedDataSource dataSource = new MutablePageKeyedDataSource<Feed>();
-//                    dataSource.data.addAll(response.body);
-//
-//                    PagedList pagedList = dataSource.buildNewPagedList(config);
-//                    cacheLiveData.postValue(pagedList);
 
-                    //下面的不可取，否则会报
-                    // java.lang.IllegalStateException: callback.onResult already called, cannot call again.
-                    //if (response.body != null) {
-                    //  callback.onResult(response.body);
-                    // }
+                    MutablePageKeyedDataSource dataSource = new MutablePageKeyedDataSource<Feed>();
+                    dataSource.data.addAll(response.body);
+
+                    PagedList pagedList = dataSource.buildNewPagedList(config);
+                    cacheLiveData.postValue(pagedList);
                 }
             });
         }
 
+        /**
+         * 处理接口回调
+         * 由于是在子线程，直接同步请求即可
+         */
         try {
             Request netRequest = witchCache ? request.clone() : request;
             netRequest.cacheStrategy(key == 0 ? Request.NET_CACHE : Request.NET_ONLY);
@@ -113,29 +142,35 @@ public class HomeViewModel extends AbsViewModel<Feed> {
             List<Feed> data = response.body == null ? Collections.emptyList() : response.body;
             callback.onResult(data);
 
-//            if (key > 0) {
-//                //通过BoundaryPageData发送数据 告诉UI层 是否应该主动关闭上拉加载分页的动画
-//                ((MutableLiveData) getBoundaryPageData()).postValue(data.size() > 0);
-//                loadAfter.set(false);
-//            }
+            if (key > 0) {
+                // 通过BoundaryPageData发送数据 告诉UI层 是否应该主动关闭上拉加载分页的动画
+                ((MutableLiveData) getBoundaryPageData()).postValue(data.size() > 0);
+
+                // 缓存方面处理结束
+                loadAfter.set(false);
+            }
+
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
-
         Log.e("loadData", "loadData: key:" + key);
-
     }
 
-//    public void loadAfter(int id, ItemKeyedDataSource.LoadCallback<Feed> callback) {
-//        if (loadAfter.get()) {
-//            callback.onResult(Collections.emptyList());
-//            return;
-//        }
-//        ArchTaskExecutor.getIOThreadExecutor().execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                loadData(id, config.pageSize, callback);
-//            }
-//        });
-//    }
+    @SuppressLint("RestrictedApi")
+    public void loadAfter(int id, ItemKeyedDataSource.LoadCallback<Feed> callback) {
+
+        // 正在异步处理 直接返回
+        if (loadAfter.get()) {
+            callback.onResult(Collections.emptyList());
+            return;
+        }
+
+        // 获取缓存数据
+        ArchTaskExecutor.getIOThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                loadData(id, config.pageSize, callback);
+            }
+        });
+    }
 }

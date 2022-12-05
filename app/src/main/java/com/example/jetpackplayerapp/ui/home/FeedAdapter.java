@@ -44,6 +44,12 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
         mCategory = category;
     }
 
+    /**
+     * 实现父类的ViewHolder方法，以提供xml布局
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -51,6 +57,11 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
         return new ViewHolder(binding.getRoot(), binding);
     }
 
+    /**
+     * 实现数据的绑定
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Feed feed = getItem(position);
@@ -84,8 +95,11 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
             //而dataBinding的执行默认是延迟一帧的。
             //当列表上下滑动的时候 ，会明显的看到宽高尺寸不对称的问题
 
+            // 给binding类型的xml设置数据
             mBinding.setVariable(com.example.jetpackplayerapp.BR.feed, item);
             mBinding.setVariable(BR.lifeCycleOwner, mContext);
+
+            // 给非binding类型的组件手动设置数据
             if (mBinding instanceof LayoutFeedTypeImageBinding) {
                 LayoutFeedTypeImageBinding imageBinding = (LayoutFeedTypeImageBinding) mBinding;
                 feedImage = imageBinding.feedImage;
