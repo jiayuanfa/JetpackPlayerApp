@@ -1,8 +1,6 @@
 package com.example.jetpackplayerapp.ui.home;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.arch.core.executor.ArchTaskExecutor;
 import androidx.lifecycle.MutableLiveData;
@@ -14,6 +12,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.example.jetpackplayerapp.AbsViewModel;
 import com.example.jetpackplayerapp.MutablePageKeyedDataSource;
 import com.example.jetpackplayerapp.model.Feed;
+import com.example.jetpackplayerapp.utils.AppConstant;
 import com.example.libnetwork.ApiResponse;
 import com.example.libnetwork.ApiService;
 import com.example.libnetwork.JsonCallback;
@@ -48,7 +47,6 @@ public class HomeViewModel extends AbsViewModel<Feed> {
     }
 
     public void setFeedType(String feedType) {
-
         mFeedType = feedType;
     }
 
@@ -59,17 +57,14 @@ public class HomeViewModel extends AbsViewModel<Feed> {
         @Override
         public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Feed> callback) {
             //加载初始化数据的
-            Log.e("homeviewmodel", "loadInitial: ");
             loadData(0, params.requestedLoadSize, callback);
-
-            // 首次加载不用缓存
             witchCache = false;
         }
 
         @Override
         public void loadAfter(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Feed> callback) {
-            //向后加载分页数据的
-            Log.e("homeviewmodel", "loadAfter: ");
+            System.out.println(AppConstant.LOG_HOME_FRAGMENT + "loadAfter:" + "key:" + params.key);
+            // 向后加载分页数据
             loadData(params.key, params.requestedLoadSize, callback);
         }
 
@@ -106,7 +101,7 @@ public class HomeViewModel extends AbsViewModel<Feed> {
         Request request = ApiService.get("/feeds/queryHotFeedsList")
                 .addParam("feedType", 1)
                 .addParam("userId", 0)
-                .addParam("feedId", 0)
+                .addParam("feedId", key)
                 .addParam("pageCount", count)
                 .responseType(new TypeReference<ArrayList<Feed>>() {
                 }.getType());
@@ -120,12 +115,12 @@ public class HomeViewModel extends AbsViewModel<Feed> {
             request.execute(new JsonCallback<List<Feed>>() {
                 @Override
                 public void onCacheSuccess(ApiResponse<List<Feed>> response) {
-                    Log.e("loadData", "onCacheSuccess: ");
 
                     MutablePageKeyedDataSource dataSource = new MutablePageKeyedDataSource<Feed>();
                     dataSource.data.addAll(response.body);
 
                     PagedList pagedList = dataSource.buildNewPagedList(config);
+                    System.out.println(AppConstant.LOG_HOME_FRAGMENT + "loadDataCacheOnlyLog:" + "key:" + key + "dataSize:" + pagedList.size());
                     cacheLiveData.postValue(pagedList);
                 }
             });
@@ -142,30 +137,31 @@ public class HomeViewModel extends AbsViewModel<Feed> {
             List<Feed> data = response.body == null ? Collections.emptyList() : response.body;
             callback.onResult(data);
 
+            System.out.println(AppConstant.LOG_HOME_FRAGMENT + "loadDataLog:" + "key:" + key + "dataSize:" + data.size());
+
             if (key > 0) {
                 // 通过BoundaryPageData发送数据 告诉UI层 是否应该主动关闭上拉加载分页的动画
                 ((MutableLiveData) getBoundaryPageData()).postValue(data.size() > 0);
 
-                // 缓存方面处理结束
+                // 接口请求完毕
                 loadAfter.set(false);
             }
 
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
-        Log.e("loadData", "loadData: key:" + key);
     }
 
     @SuppressLint("RestrictedApi")
     public void loadAfter(int id, ItemKeyedDataSource.LoadCallback<Feed> callback) {
 
-        // 正在异步处理 直接返回
+        System.out.println(AppConstant.LOG_HOME_FRAGMENT + "loadAfter:" + "key:" + id);
+
         if (loadAfter.get()) {
             callback.onResult(Collections.emptyList());
             return;
         }
 
-        // 获取缓存数据
         ArchTaskExecutor.getIOThreadExecutor().execute(new Runnable() {
             @Override
             public void run() {

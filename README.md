@@ -57,14 +57,16 @@
 - 自定义视频播放器ListPlayerView，支持宽大于高、高大于宽，动态展示的播放器View（ListPlayerView.java）
 - 首页视频图片流列表Item UI 编写 （layout_feed_type_image.xml、layout_feed_type_video.xml）
 - 首页视频图片流列表Model编写 （Feed.java）
-- 通用的带下拉刷新、上拉加载、空视图的RecyclerView布局列表xml文件编写
-- 通用的抽象的ListFragment封装
-- PagedListAdapter的使用
-- SmartRefreshLayout的使用
-- Paging的使用
-- ViewModel的使用
-- LiveData的使用
-- 缓存处理代码编写 
+- 通用的带下拉刷新、上拉加载、空视图的RecyclerView布局列表xml文件编写 （layout_refresh_view.xml）
+- 通用的抽象的ListFragment封装 （AbsListFragment.java）
+- 通用的抽象的viewModel的封装、结合Paging框架PagedList的使用 （AbsViewModel.java）
+- PagedListAdapter的使用（FeedAdapter.java）
+- SmartRefreshLayout的使用 （HomeFragment.java）
+- ViewModel的使用、Paging数据源框架ItemKeyedDataSource的使用、初次加载数据、加载更多等数据逻辑处理（HomeViewModel.java）
+- 数据callBack的数据是Paging的数据源框架ItemKeyedDataSource等内部处理的
+- 缓存加载更多的的处理（HomeFragment.java）
+- LiveData的使用（HomeFragment.java）
+- 缓存处理代码、发射、监听 (HomeViewModel.java、HomeFragment.java)
 
 # 沙发
 # 我的

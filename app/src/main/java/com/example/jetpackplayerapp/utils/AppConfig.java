@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class AppConfig {
+
     private static HashMap<String, Destination> sDestConfig;
     private static BottomBar sBottomBar;
 

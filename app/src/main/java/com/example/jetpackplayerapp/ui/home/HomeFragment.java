@@ -13,6 +13,8 @@ import androidx.paging.PagedListAdapter;
 import com.example.jetpackplayerapp.AbsListFragment;
 import com.example.jetpackplayerapp.MutablePageKeyedDataSource;
 import com.example.jetpackplayerapp.model.Feed;
+import com.example.jetpackplayerapp.utils.AppConfig;
+import com.example.jetpackplayerapp.utils.AppConstant;
 import com.example.libnavannotation.FragmentDestination;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 
@@ -35,11 +37,12 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         /**
-         * 监听提交数据
+         * 监听缓存数据的变换
          */
         mViewModel.getCacheLiveData().observe(this, new Observer<PagedList<Feed>>() {
             @Override
             public void onChanged(PagedList<Feed> feeds) {
+                System.out.println(AppConstant.LOG_HOME_FRAGMENT + "缓存数据发生变化被监听到，提交数据给PagedListAdapter");
                 submitList(feeds);
             }
         });
@@ -53,15 +56,21 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
 
     @Override
     public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+
+        System.out.println(AppConstant.LOG_HOME_FRAGMENT + "onLoadMore");
+
         final PagedList<Feed> currentList = adapter.getCurrentList();
         if (currentList == null || currentList.size() <= 0) {
+            System.out.println(AppConstant.LOG_HOME_FRAGMENT + "onLoadMore: 无数据结束上拉加载");
             finishRefresh(false);
             return;
         }
 
-
-        // 处理缓存数据的上拉加载更多
+        /**
+         * 处理缓存的加载更多
+         */
         Feed feed = currentList.get(adapter.getItemCount() - 1);
+        System.out.println(AppConstant.LOG_HOME_FRAGMENT + "onLoadMore: loadAfter" + "FeedId:" + feed.id);
         mViewModel.loadAfter(feed.id, new ItemKeyedDataSource.LoadCallback<Feed>() {
             @Override
             public void onResult(@NonNull List<Feed> data) {
@@ -77,6 +86,8 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
                     dataSource.data.addAll(currentList);
                     dataSource.data.addAll(data);
                     PagedList pagedList = dataSource.buildNewPagedList(config);
+
+                    System.out.println(AppConstant.LOG_HOME_FRAGMENT + "onLoadMore: loadAfterCallBack:" + "currentListSize:" + currentList.size() + "\n" + "dataSize:" + data.size());
                     submitList(pagedList);
                 }
             }
@@ -87,6 +98,7 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         //invalidate 之后Paging会重新创建一个DataSource 重新调用它的loadInitial方法加载初始化数据
         //详情见：LivePagedListBuilder#compute方法
+        System.out.println(AppConstant.LOG_HOME_FRAGMENT + "onRefresh:");
         mViewModel.getDataSource().invalidate();
     }
 
