@@ -5,7 +5,7 @@
     >
 
     <data>
-        <import type="com.example.jetpackplayerapp.model.User"/>
+        <import type="com.mooc.ppjoke.model.User"/>
 
         <variable
             name="user"
@@ -20,7 +20,7 @@
         android:paddingEnd="@dimen/dp_16"
         >
 
-        <com.example.jetpackplayerapp.view.PPImageView
+        <com.mooc.ppjoke.view.PPImageView
             android:id="@+id/avatar"
             android:layout_width="40dp"
             android:layout_height="40dp"

@@ -7,7 +7,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.example.jetpackplayerapp"
+        applicationId "com.mooc.ppjoke"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
@@ -55,7 +55,7 @@ dependencies {
 //    implementation project(':libcommon')
 
     //QQ快捷登录
-//    implementation files('libs/open_sdk_r6140_lite.jar')
+    implementation files('libs/open_sdk_r6140_lite.jar')
 
     //错误收集
     implementation 'com.tencent.bugly:crashreport:latest.release'

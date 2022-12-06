@@ -7,13 +7,13 @@
     <data>
         <import type="android.text.TextUtils"/>
         <import type="android.view.View"/>
-        <import type="com.example.jetpackplayerapp.utils.StringConvert"/>
+        <import type="com.mooc.ppjoke.utils.StringConvert"/>
         <variable
             name="comment"
-            type="com.example.jetpackplayerapp.model.Comment" />
+            type="com.mooc.ppjoke.model.Comment" />
     </data>
 
-    <com.example.libcommon.view.CornerFrameLayout
+    <com.mooc.libcommon.view.CornerFrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_16"
@@ -47,7 +47,7 @@
                 android:orientation="horizontal">
 
 
-                <com.example.jetpackplayerapp.view.PPImageView
+                <com.mooc.ppjoke.view.PPImageView
                     android:id="@+id/avatar"
                     android:layout_width="@dimen/dp_20"
                     android:layout_height="@dimen/dp_20"
@@ -55,7 +55,7 @@
                     app:isCircle="@{true}"
                     tools:src="@mipmap/ic_launcher_round">
 
-                </com.example.jetpackplayerapp.view.PPImageView>
+                </com.mooc.ppjoke.view.PPImageView>
 
                 <TextView
                     android:id="@+id/user_name"
@@ -112,7 +112,7 @@
                 android:layout_marginTop="@dimen/dp_10"
                 android:visibility="@{TextUtils.isEmpty(comment.imageUrl)?View.GONE:View.VISIBLE}">
 
-                <com.example.jetpackplayerapp.view.PPImageView
+                <com.mooc.ppjoke.view.PPImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -131,6 +131,6 @@
             </FrameLayout>
 
         </LinearLayout>
-    </com.example.libcommon.view.CornerFrameLayout>
+    </com.mooc.libcommon.view.CornerFrameLayout>
 
 </layout>

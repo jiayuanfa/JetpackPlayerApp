@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"/>
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-        <com.example.libcommon.view.EmptyView
+        <com.mooc.libcommon.view.EmptyView
             android:id="@+id/empty_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

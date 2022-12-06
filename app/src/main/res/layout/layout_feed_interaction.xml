@@ -14,9 +14,9 @@
             name="lifeCycleOwner"
             type="androidx.lifecycle.LifecycleOwner" />
 
-        <import type="com.example.jetpackplayerapp.model.Feed" />
+        <import type="com.mooc.ppjoke.model.Feed" />
 
-        <import type="com.example.jetpackplayerapp.utils.StringConvert" />
+        <import type="com.mooc.ppjoke.utils.StringConvert" />
 
         <import type="android.content.Context" />
 
