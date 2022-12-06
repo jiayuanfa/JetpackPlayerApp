@@ -65,6 +65,10 @@ public class UserManager {
         return isLogin() ? mUser.userId : 0;
     }
 
+    /**
+     * 刷新登录接口
+     * @return
+     */
     public LiveData<User> refresh() {
         if (!isLogin()) {
             return login(AppGlobals.getApplication());

@@ -53,7 +53,10 @@
 - Cache存取封装（CacheManager）
 
 # 使用QQ登录实现三方登录、结合Navigator框架实现登录拦截
-
+- 我的页面登录拦截（MainActivity.java）
+- QQ登录实现（LoginActivity.java）
+- 登陆成功过上报至服务器登录接口、缓存用户登录信息（LoginActivity.java、UserManager.java）
+- 解决LiveData数据倒灌造成一直回调登录成功的问题（UserManager.java）
 
 # 首页
 - 自定义图片View之PPImageView，支持宽大于高、高大于宽，动态左边距的ImageView（PPImageView.java）

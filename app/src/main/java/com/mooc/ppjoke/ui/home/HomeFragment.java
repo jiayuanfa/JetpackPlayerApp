@@ -116,7 +116,6 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
         super.onResume();
     }
 
-
     @Override
     public void onDestroy() {
         super.onDestroy();

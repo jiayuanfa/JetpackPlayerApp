@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.action_close:
                 finish();
                 break;
@@ -60,12 +60,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //        }
 //        tencent.login(this, "all", loginListener);
 
-        // 由于会报非正版错误的问题，我们这里随机生成用户
-        User user = new User();
-        user.id = 903556656;
-        user.expires_time = System.currentTimeMillis() * 1000;
-        UserManager.get().save(new User());
-
+        // 由于会报非正版错误的问题，我们这里直接生成用户
+        save("发哥",
+                "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fblog%2F202106%2F09%2F20210609081952_51ef5.thumb.1000_0.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1672916967&t=01c7b3b79e3a6bad1da757456dc4c9b7",
+                "903556656",
+                System.currentTimeMillis() * 1000);
     }
 
     IUiListener loginListener = new IUiListener() {
