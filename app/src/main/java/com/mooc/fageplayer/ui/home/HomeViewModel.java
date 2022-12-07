@@ -12,6 +12,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.mooc.fageplayer.AbsViewModel;
 import com.mooc.fageplayer.MutablePageKeyedDataSource;
 import com.mooc.fageplayer.model.Feed;
+import com.mooc.fageplayer.ui.login.UserManager;
 import com.mooc.fageplayer.utils.AppConstant;
 import com.mooc.libnetwork.ApiResponse;
 import com.mooc.libnetwork.ApiService;
@@ -100,7 +101,7 @@ public class HomeViewModel extends AbsViewModel<Feed> {
          */
         Request request = ApiService.get("/feeds/queryHotFeedsList")
                 .addParam("feedType", 1)
-                .addParam("userId", 0)
+                .addParam("userId", UserManager.get().getUserId())
                 .addParam("feedId", key)
                 .addParam("pageCount", count)
                 .responseType(new TypeReference<ArrayList<Feed>>() {
