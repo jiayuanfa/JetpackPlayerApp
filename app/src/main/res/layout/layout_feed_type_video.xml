@@ -14,7 +14,7 @@
             name="lifeCycleOwner"
             type="androidx.lifecycle.LifecycleOwner" />
 
-        <import type="com.mooc.ppjoke.model.Feed" />
+        <import type="com.mooc.fageplayer.model.Feed" />
 
     </data>
 
@@ -37,7 +37,7 @@
 
 
         <!--   视频区域-->
-        <com.mooc.ppjoke.view.ListPlayerView
+        <com.mooc.fageplayer.view.ListPlayerView
             android:id="@+id/list_player_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

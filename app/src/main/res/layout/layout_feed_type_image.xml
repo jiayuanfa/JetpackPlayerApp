@@ -4,7 +4,7 @@
 
     <data>
 
-        <import type="com.mooc.ppjoke.model.Feed" />
+        <import type="com.mooc.fageplayer.model.Feed" />
 
         <variable
             name="feed"
@@ -30,7 +30,7 @@
             app:feedText="@{feed.feeds_text}" />
 
         <!--        图片区域-->
-        <com.mooc.ppjoke.view.PPImageView
+        <com.mooc.fageplayer.view.PPImageView
             android:id="@+id/feed_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

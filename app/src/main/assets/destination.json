@@ -4,7 +4,7 @@
     "asStarter": false,
     "needLogin": false,
     "pageUrl": "main/tabs/sofa",
-    "className": "com.mooc.ppjoke.ui.sofa.SofaFragment",
+    "className": "com.mooc.fageplayer.ui.sofa.SofaFragment",
     "id": 617038253
   },
   "main/tabs/dash": {
@@ -12,7 +12,7 @@
     "asStarter": false,
     "needLogin": false,
     "pageUrl": "main/tabs/dash",
-    "className": "com.mooc.ppjoke.ui.dashboard.DashboardFragment",
+    "className": "com.mooc.fageplayer.ui.dashboard.DashboardFragment",
     "id": 514723839
   },
   "main/tabs/home": {
@@ -20,7 +20,7 @@
     "asStarter": true,
     "needLogin": false,
     "pageUrl": "main/tabs/home",
-    "className": "com.mooc.ppjoke.ui.home.HomeFragment",
+    "className": "com.mooc.fageplayer.ui.home.HomeFragment",
     "id": 181730131
   },
   "main/tabs/publish": {
@@ -28,7 +28,7 @@
     "asStarter": false,
     "needLogin": true,
     "pageUrl": "main/tabs/publish",
-    "className": "com.mooc.ppjoke.ui.publish.PublishActivity",
+    "className": "com.mooc.fageplayer.ui.publish.PublishActivity",
     "id": 1595813708
   },
   "main/tabs/find": {
@@ -36,7 +36,7 @@
     "asStarter": false,
     "needLogin": false,
     "pageUrl": "main/tabs/find",
-    "className": "com.mooc.ppjoke.ui.find.FindFragment",
+    "className": "com.mooc.fageplayer.ui.find.FindFragment",
     "id": 1801008019
   },
   "main/tabs/my": {
@@ -44,7 +44,7 @@
     "asStarter": false,
     "needLogin": true,
     "pageUrl": "main/tabs/my",
-    "className": "com.mooc.ppjoke.ui.my.MyFragment",
+    "className": "com.mooc.fageplayer.ui.my.MyFragment",
     "id": 1879742067
   },
   "main/tabs/notification": {
@@ -52,7 +52,7 @@
     "asStarter": false,
     "needLogin": false,
     "pageUrl": "main/tabs/notification",
-    "className": "com.mooc.ppjoke.ui.notifications.NotificationsFragment",
+    "className": "com.mooc.fageplayer.ui.notifications.NotificationsFragment",
     "id": 1090183591
   }
 }

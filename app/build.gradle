@@ -7,7 +7,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.mooc.ppjoke"
+        applicationId "com.mooc.fageplayer"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
