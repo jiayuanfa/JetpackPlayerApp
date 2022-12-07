@@ -1,5 +1,8 @@
 package com.mooc.libnetwork;
 
+import com.mooc.libcommon.AppGlobals;
+import com.readystatesoftware.chuck.ChuckInterceptor;
+
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -30,6 +33,7 @@ public class ApiService {
                 .writeTimeout(5, TimeUnit.SECONDS)
                 .connectTimeout(5, TimeUnit.SECONDS)
                 .addInterceptor(interceptor)
+                .addInterceptor(new ChuckInterceptor(AppGlobals.getApplication()))
                 .build();
 
         /**

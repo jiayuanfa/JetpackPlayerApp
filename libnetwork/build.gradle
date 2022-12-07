@@ -43,4 +43,8 @@ dependencies {
     // Room lifecycle相应的注解处理器
     annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
     annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
+
+    // 网络检测
+    debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
+    releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'
 }

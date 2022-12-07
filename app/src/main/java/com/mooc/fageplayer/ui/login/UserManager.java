@@ -37,6 +37,7 @@ public class UserManager {
     }
 
     public void save(User user) {
+        user.userId = 1669859900;
         mUser = user;
         CacheManager.save(KEY_CACHE_USER, user);
         if (getUserMutableLiveData().hasObservers()) {

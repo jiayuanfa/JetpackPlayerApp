@@ -73,6 +73,8 @@
 - 缓存加载更多的的处理（HomeFragment.java）
 - LiveData的使用（HomeFragment.java）
 - 缓存处理代码、发射、监听 (HomeViewModel.java、HomeFragment.java)
+- 点赞、踩接口处理、以及点赞之后页面的刷新、绑定、（使用阿里巴巴的JSONObject解析import com.alibaba.fastjson.JSONObject;
+  、layout_feed_interaction.xml、InteractionPresenter.java）
 
 # 沙发
 # 我的
