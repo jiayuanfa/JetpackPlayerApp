@@ -108,8 +108,8 @@ public class InteractionPresenter {
     private static void toggleFeedLikeInternal(Feed feed) {
         //        http://123.56.232.18:8080/serverdemo/ugc/toggleFeedLike?itemId=1669860034454&userId=1669859900
         ApiService.get(URL_TOGGLE_FEED_LIK)
-                .addParam("userId", "1669859900")
-                .addParam("itemId", "1669860034454")
+                .addParam("userId", UserManager.get().getUserId())
+                .addParam("itemId", feed.itemId)
                 .execute(new JsonCallback<JSONObject>() {
                     @Override
                     public void onSuccess(ApiResponse<JSONObject> response) {
