@@ -25,6 +25,15 @@ public class ViewHelper {
         setViewOutline(view, radius, hideSide);
     }
 
+    /**
+     * 给传入的View设置圆角
+     * 至于为什么传入的radiusSide是上，却要给下边的bottom增加距离
+     * 是因为，每次我们是用了一个带四个圆角的外框套在了传入的View
+     * 给底部增加距离，那么也就切圆角的时候，也就切不到内部传入的View了，这样就给View完整了圆角处理
+     * @param owner
+     * @param radius
+     * @param radiusSide
+     */
     public static void setViewOutline(View owner, final int radius, final int radiusSide) {
         owner.setOutlineProvider(new ViewOutlineProvider() {
             @Override
