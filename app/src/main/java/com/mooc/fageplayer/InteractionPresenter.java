@@ -1,6 +1,9 @@
 package com.mooc.fageplayer;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.text.TextUtils;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,6 +15,7 @@ import androidx.lifecycle.Observer;
 import com.alibaba.fastjson.JSONObject;
 import com.mooc.fageplayer.model.Feed;
 import com.mooc.fageplayer.model.User;
+import com.mooc.fageplayer.share.ShareDialog;
 import com.mooc.fageplayer.ui.login.UserManager;
 import com.mooc.libcommon.AppGlobals;
 import com.mooc.libnetwork.ApiResponse;
@@ -124,6 +128,48 @@ public class InteractionPresenter {
                         showToast(response.message);
                     }
                 });
+    }
+
+    /**
+     * 打开分享面板
+     *
+     * @param context
+     * @param feed
+     */
+    public static void openShare(Context context, Feed feed) {
+
+        String shareContent = feed.feeds_text;
+        if (!TextUtils.isEmpty(feed.url)) {
+            shareContent = feed.url;
+        } else if (!TextUtils.isEmpty(feed.cover)) {
+            shareContent = feed.cover;
+        }
+
+        ShareDialog shareDialog = new ShareDialog(context);
+        shareDialog.setShareContent(shareContent);
+        shareDialog.setShareItemClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ApiService.get(URL_SHARE)
+                        .addParam("itemId", feed.itemId)
+                        .execute(new JsonCallback<JSONObject>() {
+                            @Override
+                            public void onSuccess(ApiResponse<JSONObject> response) {
+                                if (response.body != null) {
+                                    int count = response.body.getIntValue("count");
+                                    feed.getUgc().setShareCount(count);
+                                }
+                            }
+
+                            @Override
+                            public void onError(ApiResponse response) {
+                                showToast(response.message);
+                            }
+                        });
+            }
+        });
+
+        shareDialog.show();
     }
 
     /**

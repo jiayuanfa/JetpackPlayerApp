@@ -99,6 +99,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="@{()->InteractionPresenter.openShare(((Context)lifeCycleOwner), feed)}"
             android:text="@{feed.ugc.shareCount>0?StringConvert.convertFeedUgc(feed.ugc.shareCount):@string/share}"
             android:textColor="@color/color_3d3"
             android:textSize="@dimen/sp_14"
