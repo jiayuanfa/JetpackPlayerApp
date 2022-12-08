@@ -83,5 +83,11 @@
 - 获取系统中可分享的APP并调用分享（ShareDialog.java）
 - DataBinding中的Context的获取以及子的Layout文件的Content获取，通过传递LifeCycleOwner强转Context实现
 
+# 播放器
+- 播放器Target 面向接口编程（IPlayTarget.java）
+- 播放器的编写（PageListPlay.java）
+- 播放列表播放检测类、监听RV的滚动已处理播放逻辑（PageListPlayDetector.java）
+- 播放列表页面管理器，维护各个页面的播放器实例（PageListPlayManager.java）
+
 # 沙发
 # 我的

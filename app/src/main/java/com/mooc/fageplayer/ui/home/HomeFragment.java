@@ -12,6 +12,7 @@ import androidx.paging.PagedListAdapter;
 
 import com.mooc.fageplayer.AbsListFragment;
 import com.mooc.fageplayer.MutablePageKeyedDataSource;
+import com.mooc.fageplayer.exoplayer.PageListPlayDetector;
 import com.mooc.fageplayer.model.Feed;
 import com.mooc.fageplayer.utils.AppConstant;
 import com.mooc.libnavannotation.FragmentDestination;
@@ -23,6 +24,7 @@ import java.util.List;
 public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
 
     private String feedType;
+    private PageListPlayDetector playDetector;
 
     public static HomeFragment newInstance(String feedType) {
         Bundle args = new Bundle();
@@ -45,12 +47,35 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
                 submitList(feeds);
             }
         });
+
+        playDetector = new PageListPlayDetector(this, mRecyclerView);
     }
 
     @Override
     public PagedListAdapter getAdapter() {
         feedType = getArguments() == null ? "all" : getArguments().getString("feedType");
-        return new FeedAdapter(getContext(), feedType);
+        return new FeedAdapter(getContext(), feedType) {
+            @Override
+            public void onViewAttachedToWindow(@NonNull ViewHolder holder) {
+                if (holder.isVideoItem()) {
+                    playDetector.addTarget(holder.getListPlayerView());
+                }
+            }
+
+            @Override
+            public void onViewDetachedFromWindow(@NonNull ViewHolder holder) {
+                playDetector.removeTarget(holder.getListPlayerView());
+            }
+
+            @Override
+            public void onCurrentListChanged(@Nullable PagedList<Feed> previousList, @Nullable PagedList<Feed> currentList) {
+                if (previousList != null && currentList != null) {
+                    if (!currentList.containsAll(previousList)) {
+                        mRecyclerView.scrollToPosition(0);
+                    }
+                }
+            }
+        };
     }
 
     @Override
