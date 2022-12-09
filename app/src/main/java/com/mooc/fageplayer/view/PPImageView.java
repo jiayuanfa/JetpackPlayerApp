@@ -77,7 +77,7 @@ public class PPImageView extends AppCompatImageView {
     }
 
     public void bindData(int widthPx, int heightPx, int marginLeft, String imageUrl) {
-        bindData(widthPx, heightPx, marginLeft, PixUtils.getScreenWidth(), PixUtils.getScreenHeight(), imageUrl);
+        bindData(widthPx, heightPx, marginLeft, PixUtils.getScreenWidth(), PixUtils.getScreenWidth(), imageUrl);
     }
 
     private void bindData(int widthPx, int heightPx, final int marginLeft, final int maxWidth, final int maxHeight, String imageUrl) {
@@ -95,7 +95,7 @@ public class PPImageView extends AppCompatImageView {
                 public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                     int height = resource.getIntrinsicHeight();
                     int width = resource.getIntrinsicWidth();
-                    setSize(width, heightPx, marginLeft, maxWidth, maxHeight);
+                    setSize(width, height, marginLeft, maxWidth, maxHeight);
                     setImageDrawable(resource);
                 }
             });
@@ -122,10 +122,13 @@ public class PPImageView extends AppCompatImageView {
      */
     private void setSize(int width, int height, int marginLeft, int maxWidth, int maxHeight) {
         int finalWidth, finalHeight;
+
+        // 宽大于高
         if (width > height) {
             finalWidth = maxWidth;
             finalHeight = (int) (height / (width * 1.0f / finalWidth));
         } else {
+            // 高大于宽
             finalHeight = maxHeight;
             finalWidth = (int) (width / (height * 1.0f / finalHeight));
         }

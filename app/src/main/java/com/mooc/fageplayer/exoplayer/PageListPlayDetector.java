@@ -170,4 +170,16 @@ public class PageListPlayDetector {
         }
         return rvLocation;
     }
+
+    public void onPause() {
+        if (playingTarget != null) {
+            playingTarget.inActive();
+        }
+    }
+
+    public void onResume() {
+        if (playingTarget != null) {
+            playingTarget.onActive();
+        }
+    }
 }

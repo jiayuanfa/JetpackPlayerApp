@@ -1,4 +1,4 @@
-package com.mooc.ppjoke.model;
+package com.mooc.fageplayer.model;
 
 import java.util.List;
 

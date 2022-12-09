@@ -6,18 +6,22 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.mooc.fageplayer.model.BottomBar;
 import com.mooc.fageplayer.model.Destination;
+import com.mooc.fageplayer.model.SofaTab;
 import com.mooc.libcommon.AppGlobals;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class AppConfig {
 
     private static HashMap<String, Destination> sDestConfig;
     private static BottomBar sBottomBar;
+    private static SofaTab sSofaTab, sFindTabConfig;
 
     /**
      * 获取路由配置
@@ -29,6 +33,26 @@ public class AppConfig {
             sDestConfig = JSON.parseObject(content, new TypeReference<HashMap<String, Destination>>(){});
         }
         return sDestConfig;
+    }
+
+    /**
+     * 获取沙发Tab
+     * @return
+     */
+    public static SofaTab getSofaTabConfig() {
+        if (sSofaTab == null) {
+            String content = parseFile("sofa_tabs_config.json");
+            sSofaTab = JSON.parseObject(content, SofaTab.class);
+
+            // 排个序
+            Collections.sort(sSofaTab.tabs, new Comparator<SofaTab.Tabs>() {
+                @Override
+                public int compare(SofaTab.Tabs o1, SofaTab.Tabs o2) {
+                    return o1.index < o2.index ? -1 : 1;
+                }
+            });
+        }
+        return sSofaTab;
     }
 
     /**

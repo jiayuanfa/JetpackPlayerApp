@@ -16,6 +16,7 @@ import com.mooc.fageplayer.model.User;
 import com.mooc.fageplayer.ui.login.UserManager;
 import com.mooc.fageplayer.utils.AppConfig;
 import com.mooc.fageplayer.utils.NavGraphBuilder;
+import com.mooc.libcommon.utils.StatusBar;
 import com.mooc.libnetwork.ApiResponse;
 import com.mooc.libnetwork.ApiService;
 import com.mooc.libnetwork.JsonCallback;
@@ -34,6 +35,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // 由于启动的时候给Activity设置了主题，这里要更改回来，消掉背景
+        setTheme(R.style.AppTheme);
+
+        // 启动沉浸式布局，白底黑字
+        StatusBar.fitSystemBar(this);
+
         super.onCreate(savedInstanceState);
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());

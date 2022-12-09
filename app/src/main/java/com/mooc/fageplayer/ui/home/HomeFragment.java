@@ -26,6 +26,11 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
     private String feedType;
     private PageListPlayDetector playDetector;
 
+    /**
+     * 通过feedType实例化一个HomeFragment
+     * @param feedType
+     * @return
+     */
     public static HomeFragment newInstance(String feedType) {
         Bundle args = new Bundle();
         args.putString("feedType", feedType);
@@ -49,6 +54,8 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
         });
 
         playDetector = new PageListPlayDetector(this, mRecyclerView);
+
+        mViewModel.setFeedType(feedType);
     }
 
     @Override
@@ -133,12 +140,24 @@ public class HomeFragment extends AbsListFragment<Feed, HomeViewModel> {
 
     @Override
     public void onPause() {
+        playDetector.onPause();
         super.onPause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+
+        /**
+         * 沙发页面的几个子页面 复用了HomeFragment
+         * 我们需要判断下 当前页面 它是否有ParentFragment
+         * 当且仅当 它和它的ParentFragment均可见的时候 才能恢复视频播放
+         */
+        if (getParentFragment() != null) {
+            if (getParentFragment().isVisible() && isVisible()) {
+                playDetector.onResume();
+            }
+        }
     }
 
     @Override

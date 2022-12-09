@@ -88,6 +88,22 @@
 - 播放器的编写（PageListPlay.java）
 - 播放列表播放检测类、监听RV的滚动已处理播放逻辑（PageListPlayDetector.java）
 - 播放列表页面管理器，维护各个页面的播放器实例（PageListPlayManager.java）
+- 播放区域点击事件接管
 
 # 沙发
+- TabLayout的使用（fragment_sofa.xml）
+- ViewPager2的使用（fragment_sofa.xml、SofaFragment.java）
+- TabLayoutMediator的使用使得TabLayout和ViewPager2相结合（SofaFragment.java）
+- 解决Fragment复用造成的视频播放重复播放的问题（SofaFragment.java）
+
 # 我的
+
+# 6.0以上沉浸式布局以及问题修复
+- 沉浸式布局文件（StatusBar.java）
+- 白底黑字、黑底白字（StatusBar.java）
+- 问题修改（WindowInsetsFrameLayout.java、WindowInsetsNavHostFragment.java、activity_main.xml）
+
+# 启动白屏问题修复
+- 入口页面主题（styles.xml）
+- 应用（AndroidManifest.xml）
+- 进入页面处理（MainActivity.java）
