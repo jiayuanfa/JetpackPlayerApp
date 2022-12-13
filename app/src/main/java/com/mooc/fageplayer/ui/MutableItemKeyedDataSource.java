@@ -1,4 +1,4 @@
-package com.mooc.fageplayer;
+package com.mooc.fageplayer.ui;
 
 import android.annotation.SuppressLint;
 

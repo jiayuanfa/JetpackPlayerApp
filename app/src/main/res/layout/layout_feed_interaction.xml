@@ -18,7 +18,7 @@
 
         <import type="com.mooc.fageplayer.utils.StringConvert" />
 
-        <import type="com.mooc.fageplayer.InteractionPresenter"/>
+        <import type="com.mooc.fageplayer.ui.InteractionPresenter"/>
 
         <import type="android.content.Context" />
 

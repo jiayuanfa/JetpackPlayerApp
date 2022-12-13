@@ -9,8 +9,8 @@ import androidx.paging.ItemKeyedDataSource;
 import androidx.paging.PagedList;
 
 import com.alibaba.fastjson.TypeReference;
-import com.mooc.fageplayer.AbsViewModel;
-import com.mooc.fageplayer.MutablePageKeyedDataSource;
+import com.mooc.fageplayer.ui.AbsViewModel;
+import com.mooc.fageplayer.ui.MutablePageKeyedDataSource;
 import com.mooc.fageplayer.model.Feed;
 import com.mooc.fageplayer.ui.login.UserManager;
 import com.mooc.fageplayer.utils.AppConstant;

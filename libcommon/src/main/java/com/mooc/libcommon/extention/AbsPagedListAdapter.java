@@ -18,17 +18,23 @@ import androidx.recyclerview.widget.RecyclerView;
  * @param <VH>
  */
 public abstract class AbsPagedListAdapter<T, VH extends RecyclerView.ViewHolder> extends PagedListAdapter<T, VH> {
+
+    // 比ArrayList性能更好
     private SparseArray<View> mHeaders = new SparseArray<>();
     private SparseArray<View> mFooters = new SparseArray<>();
 
+    // ItemType
     private int BASE_ITEM_TYPE_HEADER = 100000;
     private int BASE_ITEM_TYPE_FOOTER = 200000;
-
 
     protected AbsPagedListAdapter(@NonNull DiffUtil.ItemCallback<T> diffCallback) {
         super(diffCallback);
     }
 
+    /**
+     * 添加HeaderView
+     * @param view
+     */
     public void addHeaderView(View view) {
         //判断给View对象是否还没有处在mHeaders数组里面
         if (mHeaders.indexOfValue(view) < 0) {
@@ -37,6 +43,10 @@ public abstract class AbsPagedListAdapter<T, VH extends RecyclerView.ViewHolder>
         }
     }
 
+    /**
+     * 添加FooterView
+     * @param view
+     */
     public void addFooterView(View view) {
         //判断给View对象是否还没有处在mFooters数组里面
         if (mFooters.indexOfValue(view) < 0) {
@@ -45,7 +55,10 @@ public abstract class AbsPagedListAdapter<T, VH extends RecyclerView.ViewHolder>
         }
     }
 
-    // 移除头部
+    /**
+     * 移除HeaderView
+     * @param view
+     */
     public void removeHeaderView(View view) {
         int index = mHeaders.indexOfValue(view);
         if (index < 0) return;
@@ -53,7 +66,10 @@ public abstract class AbsPagedListAdapter<T, VH extends RecyclerView.ViewHolder>
         notifyDataSetChanged();
     }
 
-    // 移除底部
+    /**
+     * 移除FooterView
+     * @param view
+     */
     public void removeFooterView(View view) {
         int index = mFooters.indexOfValue(view);
         if (index < 0) return;
@@ -75,6 +91,10 @@ public abstract class AbsPagedListAdapter<T, VH extends RecyclerView.ViewHolder>
         return itemCount + mHeaders.size() + mFooters.size();
     }
 
+    /**
+     * 获取中间Item的数量
+     * @return
+     */
     public int getOriginalItemCount() {
         return getItemCount() - mHeaders.size() - mFooters.size();
     }
@@ -99,10 +119,20 @@ public abstract class AbsPagedListAdapter<T, VH extends RecyclerView.ViewHolder>
         return 0;
     }
 
+    /**
+     * 判断是不是FooterView的Position
+     * @param position
+     * @return
+     */
     private boolean isFooterPosition(int position) {
         return position >= getOriginalItemCount() + mHeaders.size();
     }
 
+    /**
+     * 判断是不是HeaderView的Position
+     * @param position
+     * @return
+     */
     private boolean isHeaderPosition(int position) {
         return position < mHeaders.size();
     }
@@ -122,7 +152,6 @@ public abstract class AbsPagedListAdapter<T, VH extends RecyclerView.ViewHolder>
             };
         }
 
-
         return onCreateViewHolder2(parent, viewType);
     }
 
@@ -134,6 +163,7 @@ public abstract class AbsPagedListAdapter<T, VH extends RecyclerView.ViewHolder>
             return;
         //列表中正常类型的itemView的 position 咱们需要减去添加headerView的个数
         position = position - mHeaders.size();
+
         onBindViewHolder2(holder, position);
     }
 
@@ -200,7 +230,5 @@ public abstract class AbsPagedListAdapter<T, VH extends RecyclerView.ViewHolder>
         public void onItemRangeMoved(int fromPosition, int toPosition, int itemCount) {
             mObserver.onItemRangeMoved(fromPosition + mHeaders.size(), toPosition + mHeaders.size(), itemCount);
         }
-
-
     }
 }

@@ -36,6 +36,11 @@
 
         <activity android:name="com.mooc.fageplayer.ui.login.LoginActivity"/>
 
+        <activity android:name=".ui.detail.FeedDetailActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/feedDetail"
+            />
+
         <!-- 注册SDKActivity -->
         <activity
             android:name="com.tencent.tauth.AuthActivity"

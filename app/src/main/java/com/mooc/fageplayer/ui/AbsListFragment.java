@@ -1,4 +1,4 @@
-package com.mooc.fageplayer;
+package com.mooc.fageplayer.ui;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.mooc.fageplayer.R;
 import com.mooc.fageplayer.databinding.LayoutRefreshViewBinding;
 import com.mooc.libcommon.view.EmptyView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;

@@ -96,6 +96,20 @@
 - TabLayoutMediator的使用使得TabLayout和ViewPager2相结合（SofaFragment.java）
 - 解决Fragment复用造成的视频播放重复播放的问题（SofaFragment.java）
 
+# 图文详情页、视频详情页
+- 顶部HeaderXML组件代码编写（layout_feed_detail_author_info.xml）
+- 底部FooterXML组件代码编写（layout_feed_detail_bottom_inateraction.xml）
+- 可添加HeaderView和FooterView的抽象AbsPagedListAdapter组件代码编写（AbsPagedListAdapter.java）
+- 评论列表Adapter代码编写、继承自AbsPageListAdapter（FeedCommentAdapter.java）
+## ViewHandler抽象类编写、持有图文详情和视频详情公共组件（ViewHandler.java）
+- 持有ViewModel类、视图类
+- 监听数据变化，设置数据、监听点击事件等等
+- 接口事件接入、关注、收藏、点赞（InteractionPresenter.java）
+## 图文详情ImageViewHandler逻辑处理代码（ImageViewHandler.java）
+- 监听RV的滑动，处理头部的隐藏与现实工作
+## 图文详情页代码编写 （FeedDetailActivity.java）
+- 持有ImageViewHandler，并给其设置数据
+
 # 我的
 
 # 6.0以上沉浸式布局以及问题修复

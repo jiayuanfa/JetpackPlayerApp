@@ -18,6 +18,7 @@ import com.mooc.fageplayer.R;
 import com.mooc.fageplayer.databinding.LayoutFeedTypeImageBinding;
 import com.mooc.fageplayer.databinding.LayoutFeedTypeVideoBinding;
 import com.mooc.fageplayer.model.Feed;
+import com.mooc.fageplayer.ui.detail.FeedDetailActivity;
 import com.mooc.fageplayer.view.ListPlayerView;
 
 public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> {
@@ -66,6 +67,15 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Feed feed = getItem(position);
         holder.bindData(feed);
+
+        holder.itemView.setOnClickListener(view -> {
+            FeedDetailActivity.startFeedDetailActivity(mContext, feed, mCategory);
+            onStartFeedDetailActivity(feed);
+        });
+    }
+
+    private void onStartFeedDetailActivity(Feed feed) {
+
     }
 
     @Override

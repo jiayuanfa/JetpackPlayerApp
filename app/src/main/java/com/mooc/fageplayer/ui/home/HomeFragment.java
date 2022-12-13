@@ -10,8 +10,8 @@ import androidx.paging.ItemKeyedDataSource;
 import androidx.paging.PagedList;
 import androidx.paging.PagedListAdapter;
 
-import com.mooc.fageplayer.AbsListFragment;
-import com.mooc.fageplayer.MutablePageKeyedDataSource;
+import com.mooc.fageplayer.ui.AbsListFragment;
+import com.mooc.fageplayer.ui.MutablePageKeyedDataSource;
 import com.mooc.fageplayer.exoplayer.PageListPlayDetector;
 import com.mooc.fageplayer.model.Feed;
 import com.mooc.fageplayer.utils.AppConstant;
