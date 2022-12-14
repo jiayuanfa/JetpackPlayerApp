@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
 import androidx.paging.PagedListAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,8 +20,12 @@ import com.mooc.fageplayer.R;
 import com.mooc.fageplayer.databinding.LayoutFeedTypeImageBinding;
 import com.mooc.fageplayer.databinding.LayoutFeedTypeVideoBinding;
 import com.mooc.fageplayer.model.Feed;
+import com.mooc.fageplayer.ui.InteractionPresenter;
 import com.mooc.fageplayer.ui.detail.FeedDetailActivity;
 import com.mooc.fageplayer.view.ListPlayerView;
+import com.mooc.libcommon.extention.LiveDataBus;
+
+import java.util.Observable;
 
 public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> {
 
@@ -71,11 +77,38 @@ public class FeedAdapter extends PagedListAdapter<Feed, FeedAdapter.ViewHolder> 
         holder.itemView.setOnClickListener(view -> {
             FeedDetailActivity.startFeedDetailActivity(mContext, feed, mCategory);
             onStartFeedDetailActivity(feed);
+            if (mFeedObserver == null) {
+                mFeedObserver = new FeedObserver();
+                LiveDataBus.get()
+                        .with(InteractionPresenter.DATA_FROM_INTERACTION)
+                        .observe((LifecycleOwner) mContext, mFeedObserver);
+            }
+            mFeedObserver.setFeed(feed);
         });
     }
 
     private void onStartFeedDetailActivity(Feed feed) {
 
+    }
+
+    private FeedObserver mFeedObserver;
+    private class FeedObserver implements Observer<Feed> {
+
+        private Feed mFeed;
+
+        @Override
+        public void onChanged(Feed newOne) {
+            if (mFeed.id != newOne.id) {
+                return;
+            }
+            mFeed.author = newOne.author;
+            mFeed.ugc = newOne.ugc;
+            mFeed.notifyChange();
+        }
+
+        public void setFeed(Feed feed) {
+            mFeed = feed;
+        }
     }
 
     @Override

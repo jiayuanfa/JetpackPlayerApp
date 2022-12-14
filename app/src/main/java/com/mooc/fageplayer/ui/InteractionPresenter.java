@@ -22,6 +22,7 @@ import com.mooc.fageplayer.model.User;
 import com.mooc.fageplayer.share.ShareDialog;
 import com.mooc.fageplayer.ui.login.UserManager;
 import com.mooc.libcommon.AppGlobals;
+import com.mooc.libcommon.extention.LiveDataBus;
 import com.mooc.libnetwork.ApiResponse;
 import com.mooc.libnetwork.ApiService;
 import com.mooc.libnetwork.JsonCallback;
@@ -124,6 +125,8 @@ public class InteractionPresenter {
                         if (response.body != null) {
                             boolean hasLiked = response.body.getBoolean("hasLiked");
                             feed.getUgc().setHasLiked(hasLiked);
+                            LiveDataBus.get().with(DATA_FROM_INTERACTION)
+                                    .postValue(feed);
                         }
                     }
 
@@ -242,8 +245,8 @@ public class InteractionPresenter {
                         if (response.body != null) {
                             boolean hasFavorite = response.body.getBooleanValue("hasFavorite");
                             feed.getUgc().setHasFavorite(hasFavorite);
-//                            LiveDataBus.get().with(DATA_FROM_INTERACTION)
-//                                    .postValue(feed);
+                            LiveDataBus.get().with(DATA_FROM_INTERACTION)
+                                    .postValue(feed);
                         }
                     }
 
@@ -281,8 +284,8 @@ public class InteractionPresenter {
                         if (response.body != null) {
                             boolean hasFollow = response.body.getBooleanValue("hasLiked");
                             feed.getAuthor().setHasFollow(hasFollow);
-//                            LiveDataBus.get().with(DATA_FROM_INTERACTION)
-//                                    .postValue(feed);
+                            LiveDataBus.get().with(DATA_FROM_INTERACTION)
+                                    .postValue(feed);
                         }
                     }
 

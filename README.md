@@ -91,6 +91,10 @@
 - 播放区域点击事件接管
 
 # LiveDataBus事件总线
+- 正常时间：先监听，后发送
+- 粘性事件：先发送，后监听
+- 编写LiveDataBus实现正常事件与粘性事件的分发（LiveDataBus.java）
+
 
 # 沙发
 - TabLayout的使用（fragment_sofa.xml）
