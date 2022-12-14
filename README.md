@@ -90,6 +90,8 @@
 - 播放列表页面管理器，维护各个页面的播放器实例（PageListPlayManager.java）
 - 播放区域点击事件接管
 
+# LiveDataBus事件总线
+
 # 沙发
 - TabLayout的使用（fragment_sofa.xml）
 - ViewPager2的使用（fragment_sofa.xml、SofaFragment.java）
@@ -111,6 +113,8 @@
 - 持有ImageViewHandler，并给其设置数据
 
 # 我的
+
+
 
 # 6.0以上沉浸式布局以及问题修复
 - 沉浸式布局文件（StatusBar.java）

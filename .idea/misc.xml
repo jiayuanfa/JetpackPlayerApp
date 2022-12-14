@@ -9,7 +9,7 @@
         <entry key="app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.1415" />
         <entry key="app/src/main/res/drawable/list_divider.xml" value="0.11" />
         <entry key="app/src/main/res/drawable/splash.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_feed_detail_type_image.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_feed_detail_type_image.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_layout_login.xml" value="0.23097826086956522" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_publish.xml" value="0.2368659420289855" />
