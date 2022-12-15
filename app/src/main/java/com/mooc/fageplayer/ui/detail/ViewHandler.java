@@ -29,7 +29,7 @@ public abstract class ViewHandler {
     protected RecyclerView mRecyclerView;
     protected LayoutFeedDetailBottomInateractionBinding mInateractionBinding;
     protected FeedCommentAdapter listAdapter;
-//    private CommentDialog commentDialog;
+    private CommentDialog commentDialog;
 
     public ViewHandler(FragmentActivity activity) {
         mActivity = activity;
@@ -70,6 +70,14 @@ public abstract class ViewHandler {
     }
 
     private void showCommentDialog() {
+        if (commentDialog == null) {
+            commentDialog = CommentDialog.newInstance(mFeed.itemId);
+        }
+        commentDialog.setCommentAddListener(comment -> {
+            handleEmpty(true);
+            listAdapter.addAndRefreshList(comment);
+        });
+        commentDialog.show(mActivity.getSupportFragmentManager(), "comment_dialog");
     }
 
     private EmptyView mEmptyView;

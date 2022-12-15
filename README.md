@@ -95,7 +95,6 @@
 - 粘性事件：先发送，后监听
 - 编写LiveDataBus实现正常事件与粘性事件的分发（LiveDataBus.java）
 
-
 # 沙发
 - TabLayout的使用（fragment_sofa.xml）
 - ViewPager2的使用（fragment_sofa.xml、SofaFragment.java）
@@ -107,6 +106,8 @@
 - 底部FooterXML组件代码编写（layout_feed_detail_bottom_inateraction.xml）
 - 可添加HeaderView和FooterView的抽象AbsPagedListAdapter组件代码编写（AbsPagedListAdapter.java）
 - 评论列表Adapter代码编写、继承自AbsPageListAdapter（FeedCommentAdapter.java）
+- 底部评论框CommentDialogFragment编写、评论之后PagedList增删功能、软键盘的控制相关（CommentDialog.java、ViewHandler.java）
+
 ## ViewHandler抽象类编写、持有图文详情和视频详情公共组件（ViewHandler.java）
 - 持有ViewModel类、视图类
 - 监听数据变化，设置数据、监听点击事件等等
@@ -117,8 +118,6 @@
 - 持有ImageViewHandler，并给其设置数据
 
 # 我的
-
-
 
 # 6.0以上沉浸式布局以及问题修复
 - 沉浸式布局文件（StatusBar.java）

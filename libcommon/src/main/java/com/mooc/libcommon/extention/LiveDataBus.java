@@ -186,7 +186,7 @@ public class LiveDataBus {
         mLiveData.observe((LifecycleOwner) activity, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-
+                
             }
         });
     }
