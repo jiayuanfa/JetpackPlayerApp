@@ -90,6 +90,12 @@
 - 播放列表页面管理器，维护各个页面的播放器实例（PageListPlayManager.java）
 - 播放区域点击事件接管
 
+# CameraX录制、拍照、文件存储
+- 自定义View之录制按钮（RecordView.java）
+- 权限获取（CaptureActivity.java）
+- 拍摄/录制Activity（CaptureActivity.java）
+- 预览Activity（PreviewActivity.java）
+
 # LiveDataBus事件总线
 - 正常时间：先监听，后发送
 - 粘性事件：先发送，后监听

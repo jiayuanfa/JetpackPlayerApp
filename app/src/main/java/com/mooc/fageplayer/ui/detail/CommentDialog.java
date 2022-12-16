@@ -24,6 +24,7 @@ import com.mooc.fageplayer.R;
 import com.mooc.fageplayer.databinding.LayoutCommentDialogBinding;
 import com.mooc.fageplayer.model.Comment;
 import com.mooc.fageplayer.ui.login.UserManager;
+import com.mooc.fageplayer.ui.publish.CaptureActivity;
 import com.mooc.libcommon.AppGlobals;
 import com.mooc.libcommon.utils.PixUtils;
 import com.mooc.libcommon.view.ViewHelper;
@@ -129,9 +130,18 @@ public class CommentDialog extends AppCompatDialogFragment implements View.OnCli
                 publishComment();
                 break;
             case R.id.comment_video:
-
+                hideSoftInputMethod();
+                CaptureActivity.startActivityForResult(getActivity());
                 break;
             case R.id.comment_delete:
+                filePath = null;
+                isVideo = false;
+                width = 0;
+                height = 0;
+                mBinding.commentCover.setImageDrawable(null);
+                mBinding.commentExtLayout.setVisibility(View.GONE);
+                mBinding.commentVideo.setEnabled(true);
+                mBinding.commentVideo.setAlpha(255);
                 break;
             default:
                 break;
