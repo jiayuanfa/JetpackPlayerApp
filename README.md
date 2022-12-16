@@ -58,6 +58,9 @@
 - 登陆成功过上报至服务器登录接口、缓存用户登录信息（LoginActivity.java、UserManager.java）
 - 解决LiveData数据倒灌造成一直回调登录成功的问题（UserManager.java）
 
+# 自定义View
+- 自定义录制按钮（RecordView.java）
+
 # 首页
 - 自定义图片View之PPImageView，支持宽大于高、高大于宽，动态左边距的ImageView（PPImageView.java）
 - 自定义视频播放器ListPlayerView，支持宽大于高、高大于宽，动态展示的播放器View（ListPlayerView.java）
