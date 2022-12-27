@@ -48,7 +48,7 @@ import java.util.Map;
 
 public class CaptureActivity extends AppCompatActivity {
 
-    private static final int REQ_CAPTURE = 10001;
+    public static final int REQ_CAPTURE = 10001;
     private ActivityLayoutCaptureBinding mBinding;
     private static final String[] PERMISSIONS = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.RECORD_AUDIO};
     private static final int PERMISSION_CODE = 1000;
@@ -147,6 +147,10 @@ public class CaptureActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 文件预览
+     * @param file
+     */
     private void onFileSaved(File file) {
         outputFilePath = file.getAbsolutePath();
         String mimeType = takingPicture? "image/jpeg" : "video/mp4";

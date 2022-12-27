@@ -1,7 +1,9 @@
 package com.mooc.fageplayer.ui.detail;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.arch.core.executor.ArchTaskExecutor;
+import androidx.lifecycle.Observer;
 
 import com.mooc.fageplayer.R;
 import com.mooc.fageplayer.databinding.LayoutCommentDialogBinding;
@@ -26,11 +29,16 @@ import com.mooc.fageplayer.model.Comment;
 import com.mooc.fageplayer.ui.login.UserManager;
 import com.mooc.fageplayer.ui.publish.CaptureActivity;
 import com.mooc.libcommon.AppGlobals;
+import com.mooc.libcommon.dialog.LoadingDialog;
+import com.mooc.libcommon.utils.FileUploadManager;
+import com.mooc.libcommon.utils.FileUtils;
 import com.mooc.libcommon.utils.PixUtils;
 import com.mooc.libcommon.view.ViewHelper;
 import com.mooc.libnetwork.ApiResponse;
 import com.mooc.libnetwork.ApiService;
 import com.mooc.libnetwork.JsonCallback;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class CommentDialog extends AppCompatDialogFragment implements View.OnClickListener {
 
@@ -45,7 +53,7 @@ public class CommentDialog extends AppCompatDialogFragment implements View.OnCli
     private CommentAddListener mListener;
     private String filePath;
     private boolean isOnDestroy = false;
-//    private LoadingDialog loadingDialog;
+    private LoadingDialog loadingDialog;
 
 
     public static CommentDialog newInstance(long itemId) {
@@ -140,6 +148,8 @@ public class CommentDialog extends AppCompatDialogFragment implements View.OnCli
                 height = 0;
                 mBinding.commentCover.setImageDrawable(null);
                 mBinding.commentExtLayout.setVisibility(View.GONE);
+
+                // 允许再次录制视频
                 mBinding.commentVideo.setEnabled(true);
                 mBinding.commentVideo.setAlpha(255);
                 break;
@@ -148,14 +158,141 @@ public class CommentDialog extends AppCompatDialogFragment implements View.OnCli
         }
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CaptureActivity.REQ_CAPTURE && resultCode == Activity.RESULT_OK) {
+            filePath = data.getStringExtra(CaptureActivity.RESULT_FILE_PATH);
+            width = data.getIntExtra(CaptureActivity.RESULT_FILE_WIDTH, 0);
+            height = data.getIntExtra(CaptureActivity.RESULT_FILE_HEIGHT, 0);
+            isVideo = data.getBooleanExtra(CaptureActivity.RESULT_FILE_TYPE, false);
+
+            if (!TextUtils.isEmpty(filePath)) {
+                mBinding.commentExtLayout.setVisibility(View.VISIBLE);
+                mBinding.commentCover.setImageUrl(filePath);
+                if (isVideo) {
+                    mBinding.commentIconVideo.setVisibility(View.VISIBLE);
+                }
+            }
+
+            // 禁止再次录制视频 除非删除
+            mBinding.commentVideo.setEnabled(false);
+            mBinding.commentVideo.setAlpha(80);
+        }
+    }
+
+    /**
+     * 文件上传、发布
+     */
     private void publishComment() {
         if (TextUtils.isEmpty(mBinding.inputView.getText())) {
             return;
         }
-
-        publish();
+        if (isVideo && !TextUtils.isEmpty(filePath)) {
+            // 视频
+            FileUtils.generateVideoCover(filePath).observe(this, new Observer<String>() {
+                @Override
+                public void onChanged(String coverPath) {
+                    uploadFile(coverPath, filePath);
+                }
+            });
+        } else if (!TextUtils.isEmpty(filePath)) {
+            // 图片
+            uploadFile(null, filePath);
+        } else {
+            publish();
+        }
     }
 
+    /**
+     * 上传封面图、视频文件
+     * @param coverPath
+     * @param filePath
+     */
+    @SuppressLint("RestrictedApi")
+    private void uploadFile(String coverPath, String filePath) {
+        showLoadingDialog();
+
+        AtomicInteger count = new AtomicInteger(1);
+
+        /**
+         * 视频
+         * 封面图+文件path
+         */
+        if (!TextUtils.isEmpty(coverPath)) {
+            count.set(2);
+            ArchTaskExecutor.getIOThreadExecutor().execute(new Runnable() {
+                @Override
+                public void run() {
+                    int remain = count.decrementAndGet();
+                    coverUrl = FileUploadManager.upload(coverPath);
+                    if (remain <= 0) {
+                        if (!TextUtils.isEmpty(fileUrl) && !TextUtils.isEmpty(coverUrl)) {
+                            publish();
+                        } else {
+                            dismissLoadingDialog();
+                            showToast(getString(R.string.file_upload_failed));
+                        }
+                    }
+                }
+            });
+        }
+
+        /**
+         * 图片只有文件，没有封面图
+         */
+        ArchTaskExecutor.getIOThreadExecutor().execute(new Runnable() {
+            @Override
+            public void run() {
+                int remain = count.decrementAndGet();
+                fileUrl = FileUploadManager.upload(filePath);
+                if (remain <= 0) {
+                    if (!TextUtils.isEmpty(fileUrl) || !TextUtils.isEmpty(coverPath) && !TextUtils.isEmpty(coverUrl)) {
+                        publish();
+                    } else {
+                        dismissLoadingDialog();
+                        showToast(getString(R.string.file_upload_failed));
+                    }
+                }
+            }
+        });
+    }
+
+    private void showLoadingDialog() {
+        if (loadingDialog == null) {
+            loadingDialog = new LoadingDialog(getContext());
+            loadingDialog.setLoadingText(getString(R.string.upload_text));
+            loadingDialog.setCanceledOnTouchOutside(false);
+            loadingDialog.setCancelable(false);
+        }
+        if (!loadingDialog.isShowing()) {
+            loadingDialog.show();
+        }
+    }
+
+    @SuppressLint("RestrictedApi")
+    private void dismissLoadingDialog() {
+        if (loadingDialog != null) {
+            if (Looper.myLooper() == Looper.getMainLooper()) {
+                if (loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
+            } else {
+                ArchTaskExecutor.getMainThreadExecutor().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (loadingDialog.isShowing()) {
+                            loadingDialog.dismiss();
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * 评论发布
+     */
     private void publish() {
         String commentText = mBinding.inputView.getText().toString();
         ApiService.post("/comment/addComment")
@@ -219,10 +356,6 @@ public class CommentDialog extends AppCompatDialogFragment implements View.OnCli
         isVideo = false;
         width = 0;
         height = 0;
-    }
-
-    private void dismissLoadingDialog() {
-
     }
 
     public interface CommentAddListener {

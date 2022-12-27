@@ -125,6 +125,8 @@
 - 监听RV的滑动，处理头部的隐藏与现实工作
 ## 图文详情页代码编写 （FeedDetailActivity.java）
 - 持有ImageViewHandler，并给其设置数据
+- 视频详情页图文评论、视频加文字评论、多线程上传处理、Activity+DialogFragment+Activity跳转传值处理
+- （CaptureActivity.java、PreviewActivity.java、CommentDialog.java）
 
 # 我的
 

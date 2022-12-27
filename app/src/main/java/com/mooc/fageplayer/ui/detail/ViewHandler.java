@@ -98,7 +98,18 @@ public abstract class ViewHandler {
         }
     }
 
+    /**
+     * 让DialogFragment的onActivityResult收到回调的核心方法
+     * 就是在DialogFragment所在的Activity中的onActivityResult中
+     * 调用DialogFragment的onActivityFragment
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (commentDialog != null && commentDialog.isAdded()) {
+            commentDialog.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     public void onPause() {}
