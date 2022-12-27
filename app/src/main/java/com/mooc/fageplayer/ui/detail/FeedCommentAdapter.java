@@ -19,6 +19,7 @@ import com.mooc.fageplayer.model.Comment;
 import com.mooc.fageplayer.ui.InteractionPresenter;
 import com.mooc.fageplayer.ui.MutableItemKeyedDataSource;
 import com.mooc.fageplayer.ui.login.UserManager;
+import com.mooc.fageplayer.ui.publish.PreviewActivity;
 import com.mooc.libcommon.extention.AbsPagedListAdapter;
 import com.mooc.libcommon.utils.PixUtils;
 
@@ -63,7 +64,7 @@ public class FeedCommentAdapter extends AbsPagedListAdapter<Comment, FeedComment
                         }));
         holder.mBinding.commentCover.setOnClickListener(v -> {
             boolean isVideo = item.commentType == Comment.COMMENT_TYPE_VIDEO;
-//            PreviewActivity.startActivityForResult((Activity) mContext, isVideo ? item.videoUrl : item.imageUrl, isVideo, null);
+            PreviewActivity.startActivityForResult((Activity) mContext, isVideo ? item.videoUrl : item.imageUrl, isVideo, null);
         });
     }
 
