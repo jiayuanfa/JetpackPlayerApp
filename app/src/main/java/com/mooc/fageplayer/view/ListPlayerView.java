@@ -111,7 +111,7 @@ public class ListPlayerView extends FrameLayout implements IPlayTarget, PlayerCo
      * @param widthPx
      * @param heightPx
      */
-    private void setSize(int widthPx, int heightPx) {
+    protected void setSize(int widthPx, int heightPx) {
         int maxWidth = PixUtils.getScreenWidth();
         int maxHeight = maxWidth;
 

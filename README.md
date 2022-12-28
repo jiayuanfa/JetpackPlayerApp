@@ -128,6 +128,7 @@
 - 视频详情页图文评论、视频加文字评论、多线程上传处理、Activity+DialogFragment+Activity跳转传值处理
 - （CaptureActivity.java、PreviewActivity.java、CommentDialog.java）
 - 视频评论点击可预览（FeedCommentAdapter.java）
+- 全屏视频播放器代码的编写（FullScreenPlayerView.java）
 
 # 我的
 

@@ -59,5 +59,13 @@ public class PageListPlay {
         }
     }
 
-
+    /**
+     * 切换与播放器exoplayer 绑定的exoplayerView。用于页面切换视频无缝续播的场景
+     * @param newPlayerView
+     * @param attach
+     */
+    public void switchPlayerView(PlayerView newPlayerView, boolean attach) {
+        playerView.setPlayer(attach ? null : exoPlayer);
+        newPlayerView.setPlayer(attach ? exoPlayer : null);
+    }
 }
