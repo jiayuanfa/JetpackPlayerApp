@@ -129,6 +129,7 @@
 - （CaptureActivity.java、PreviewActivity.java、CommentDialog.java）
 - 视频评论点击可预览（FeedCommentAdapter.java）
 - 全屏视频播放器代码的编写（FullScreenPlayerView.java）
+- 视频播放View缩放行为控制代码编写（ViewZoomBehavior.java）
 
 # 我的
 
