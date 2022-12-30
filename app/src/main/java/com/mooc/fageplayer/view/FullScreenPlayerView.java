@@ -107,7 +107,11 @@ public class FullScreenPlayerView extends ListPlayerView {
             return;
         }
 
-        // 主动关联播放器与exoPlayerView
+        /**
+         * 此处所关联的播放器是列表缓存的那个
+         * 我们通过mCategory取出来的
+         * 主动关联播放器与exoPlayerView
+         */
         pageListPlay.switchPlayerView(playerView, true);
 
         ViewParent parent = playerView.getParent();

@@ -169,6 +169,13 @@ public class ListPlayerView extends FrameLayout implements IPlayTarget, PlayerCo
             return;
         }
 
+        /**
+         * 此处我们需要主动调用一次 switchPlayerView，把播放器exoplayer和展示视频画面的view exoplayerView相关联
+         * 为什么呢？因为在列表页点击视频Item跳转到视频详情页的时候，详情页会复用列表页的播放器exoplayer。然后和新创建的展示视频画面的View exoplayerView相关联 达到无缝续播的效果
+         * 如果我们再次返回列表页 则需要再次把播放器和exoplayerView相关联
+         */
+        pageListPlay.switchPlayerView(playerView, true);
+
         // 添加播放器到Item上
         ViewParent parent = playerView.getParent();
         if (parent != this) {
